@@ -17,14 +17,24 @@ const Cursos = [
     tieneCertificado : false}
 ]
 
-const desarrolloCertificado = Cursos.filter(curso => curso.categoria === 'Desarrollo' && curso.tieneCertificado);
+// DEFINICIÓN DE REGLAS
+const esDesarrolloCertificado = (curso) => curso.categoria === 'Desarrollo' && curso.tieneCertificado;
+
+const esGratisODiseño = (curso) => curso.esgratis === true || curso.categoria === 'Diseño';
+
+const esIncertificado = (curso) => curso.tieneCertificado === false;
+
+const esDesarrolloCertificadoOGratis = (curso) => (curso.categoria === 'Desarrollo' && curso.tieneCertificado === true) || curso.esgratis === true;
+
+// APLICACIÓN DE REGLAS (CONSULTAS)
+const desarrolloCertificado = Cursos.filter(esDesarrolloCertificado).map(curso => curso.titulo);
 //console.log(desarrolloCertificado);
 
-const gratisODiseño = Cursos.filter(curso => curso.esgratis === true || curso.categoria === 'Diseño');
+const gratisODiseño = Cursos.filter(esGratisODiseño).map(curso => curso.titulo);
 console.log(gratisODiseño);
 
-const cursosIncertificados = Cursos.filter(curso => curso.tieneCertificado === false);
+const cursosIncertificados = Cursos.filter(esIncertificado).map(curso => curso.titulo);
 //console.log(cursosIncertificados);
 
-const CursosCertiGratis = Cursos.filter(curso => curso.categoria === 'Desarrollo' && curso.tieneCertificado === true || curso.esgratis === true);
-//console.log(CursosCertiGratis);
+const CursosCertiGratis = Cursos.filter(esDesarrolloCertificadoOGratis).map(curso => curso.titulo);
+console.log(CursosCertiGratis);
