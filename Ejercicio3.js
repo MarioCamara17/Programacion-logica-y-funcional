@@ -14,16 +14,19 @@ const usuarioEspecial = (usuario) => usuario.rol === 'admin' && usuario.edad < 1
 
 const permisosEdicion = (usuario) => usuario.activo === true && (usuario.edad > 18 || usuario.rol === 'admin');
 
-//consultas
+//combinacion de hechos en consultas
 
-const usuariosEnvioDeshabilitado = Usuarios.filter(envioaDeshabilitado).map(usuario => usuario.nombre);
-console.log(usuariosEnvioDeshabilitado);
+const usuariosAccesoYEdicion = Usuarios.filter(usuario => accesoPermitido(usuario) && permisosEdicion(usuario)).map(usuario => usuario.nombre);
+console.log("Usuarios con acceso permitido Y permisos de edición:", usuariosAccesoYEdicion);
 
-const usuariosAccesoPermitido = Usuarios.filter(accesoPermitido).map(usuario => usuario.nombre);
-console.log(usuariosAccesoPermitido);
+const usuariosEspecialesODeshabilitados = Usuarios.filter(usuario => usuarioEspecial(usuario) || envioaDeshabilitado(usuario)).map(usuario => usuario.nombre);
+console.log("Usuarios especiales O deshabilitados:", usuariosEspecialesODeshabilitados);
 
-const usuariosEspeciales = Usuarios.filter(usuarioEspecial).map(usuario => usuario.nombre);
-console.log(usuariosEspeciales);
+const usuariosActivos = Usuarios.filter(usuario => usuario.activo === true).map(usuario => usuario.nombre);
+console.log("Usuarios activos:", usuariosActivos);
 
-const usuariosPermisosEdicion = Usuarios.filter(permisosEdicion).map(usuario => usuario.nombre);
-console.log(usuariosPermisosEdicion);
+const usuariosAdminActivos = Usuarios.filter(usuario => usuario.rol === 'admin' && usuario.activo === true).map(usuario => usuario.nombre);
+console.log("Usuarios admin activos:", usuariosAdminActivos);
+
+const usuariosMayoresDeEdad = Usuarios.filter(usuario => usuario.edad >= 18 && usuario.activo === true).map(usuario => usuario.nombre);
+console.log("Usuarios mayores de edad activos:", usuariosMayoresDeEdad);
