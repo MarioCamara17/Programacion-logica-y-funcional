@@ -7,7 +7,7 @@ const primosNumero = num => {
     return true
 }
 
-//Funcion lazy
+//Funcion 
 function* generarPrimos(){
     let evaluar = 2;
     while(true){
